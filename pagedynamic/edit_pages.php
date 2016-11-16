@@ -20,16 +20,14 @@ if(isset($_POST['page_update'])){
     extract($_POST);
     global $CFG, $PAGE, $USER,$DB;
     $id = trim($page_id);
-    $update_data     =  new stdClass(); 
-    $update_data->id       =  $page_id;
-    $update_data->page_slug     =  getSlugURL($page_title);
-    $update_data->page_title    =  getCleanContent($page_title);
-    $update_data->page_conent   =  getCleanContent($page_content);
-    $update_data->page_status   =  $page_status; 
+    // $update_data     =  new stdClass(); 
+    // $update_data->id            =  $id;
+    // $update_data->page_slug     =  getSlugURL($page_title);
+    // $update_data->page_title    =  getCleanContent($page_title);
+    // $update_data->page_conent   =  getCleanContent($page_content);
+    // $update_data->page_status   =  $page_status; 
 
-    $res=$DB->update_record('cms_pages',$update_data,true);
-
-    //$res  = $DB->get_records_sql("update {cms_pages} set `page_slug`='".getSlugURL($page_slug)."',`page_title`='".getCleanContent($page_title)."',`page_conent`='".getCleanContent($page_conent)."',`page_status`='".$page_status."'  where `page_id`=".$id);
+    $res  = $DB->execute("update {cms_pages} set `page_slug`='".getSlugURL($page_title)."',`page_title`='".getCleanContent($page_title)."',`page_content`='".getCleanContent($page_content)."',`page_status`='".$page_status."'  where `id`=".$id);
    if($res){
       $msg = "<span style='color:green'>Page Updated </span>";
    }
@@ -110,4 +108,3 @@ if(isset($msg)){ ?>
   CKEDITOR.replace( 'ckeditor' );
 </script>
 <?php  echo $OUTPUT->footer(); ?>
-
